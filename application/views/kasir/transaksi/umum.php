@@ -516,35 +516,31 @@
             }
         })
 
-        $("#qty_edit").keyup(function(event) {
-            if (event.keyCode === 13) {
-                $('#iya_edit').click(function() {
-                    var quantity = $('#qty_edit').val()
-                    $.ajax({
-                        url: "<?php echo site_url('kasir/transaksi_umum/update_cart/') ?>" + produk_id,
-                        method: "POST",
-                        data: {
-                            row_id: id,
-                            quantity: quantity
-                        },
-                        dataType: "JSON",
-                        success: function(ok) {
-                            if (ok.status) {
-                                $('#modal_edit').modal('hide')
-                                reload_table()
-                                reload_total()
-                                document.getElementById('form_order').reset()
-                                document.getElementById('kode_barang').focus()
-                            } else {
-                                $.notify("Gagal! \n" + ok.message, "error")
-                                $('#qty_edit').focus()
-                            }
-                        }
-                    })
-                })
-            }
-        })
 
+        $('#iya_edit').click(function() {
+            var quantity = $('#qty_edit').val()
+            $.ajax({
+                url: "<?php echo site_url('kasir/transaksi_umum/update_cart/') ?>" + produk_id,
+                method: "POST",
+                data: {
+                    row_id: id,
+                    quantity: quantity
+                },
+                dataType: "JSON",
+                success: function(ok) {
+                    if (ok.status) {
+                        $('#modal_edit').modal('hide')
+                        reload_table()
+                        reload_total()
+                        document.getElementById('form_order').reset()
+                        document.getElementById('kode_barang').focus()
+                    } else {
+                        $.notify("Gagal! \n" + ok.message, "error")
+                        $('#qty_edit').focus()
+                    }
+                }
+            })
+        })
     }
 
     function hapus_cart(id, produk_id) {
