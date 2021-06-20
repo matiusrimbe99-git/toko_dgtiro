@@ -4,7 +4,7 @@ class TransaksiModel extends CI_Model
     public function
     tampil_data_by_kode_produk($id)
     {
-        return $this->db->get_where('tb_produk', array('kode_produk' => $id))->row_array();
+        return $this->db->get_where('tb_produk', array('kode_produk' => $id));
     }
 
     public function tampil_data()

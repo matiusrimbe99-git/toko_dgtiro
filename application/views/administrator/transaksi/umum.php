@@ -9,8 +9,8 @@
                 <table style="height: 60px;">
                     <tr>
                         <td style="width: 30%; ">
-                            <form action="#" id="form_order" method="post">
-                                <input type="text" id="kode_barang" name="search" style="height: 40px; font-size: larger; background:#f4f7f9;" value="Barcode Scanner" required="true" class="form-control" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Barcode Scanner';}" required="">
+                            <form id="form_order" onsubmit="return order_produk()" method="post">
+                                <input type="text" id="kode_barang" name="search" style="height: 40px; font-size: larger; background:#f4f7f9;" class="form-control" autofocus>
                             </form>
                         </td>
                         <td style="width: 30%;">
@@ -367,6 +367,58 @@
     }
 
 
+    function order_produk() {
+        return false
+    }
+
+    $('#kode_barang').on('change', function() {
+        if ($(this).val().length > 5) {
+            $.ajax({
+                url: "<?php echo site_url('administrator/transaksi_umum/get_data/') ?>" + $(this).val(),
+                type: 'GET',
+                dataType: 'JSON',
+                success: function(obj) {
+                    if (obj.status == true) {
+                        $('#order_quantity').modal('show')
+                        $('#modal-trans').modal('hide')
+                        $('#cari_produk').modal('hide')
+                        $('#result').html(
+                            '<td class="text-center">' + obj.result.ID_produk + '</td>' +
+                            '<td>' + obj.result.nama_produk + '</td>' +
+                            '<td class="text-center">' + obj.result.stok + '</td>' +
+                            '<td class="text-center">' + obj.result.satuan + '</td>' +
+                            '<td>' + obj.result.harga_umum + '</td>'
+                        )
+
+
+                        if (obj.result.stok == 0) {
+                            $('#order_quantity').modal('hide')
+                            $.notify("PERHATIAN! \nStok tidak tersedia.", "error")
+                            document.getElementById('form_order').reset()
+                            document.getElementById('kode_barang').focus()
+                            $('#qty').focus()
+                        }
+
+                        $('#qty').focus()
+                    } else {
+                        $.notify("Gagal! \nData tidak tersedia.\nMohon lakukan pengentrian data produk \nyang belum tersedia.", "error")
+                        document.getElementById('form_order').reset()
+                        document.getElementById('kode_barang').focus()
+                        $('#qty').focus()
+                    }
+                }
+            })
+        }
+    })
+
+
+    $("#qty").keyup(function(event) {
+        if (event.keyCode === 13) {
+            masukkan()
+        }
+    })
+
+
     function cari_produk() {
         $('#cari_produk').modal('show')
     }
@@ -464,30 +516,35 @@
             }
         })
 
-        $('#iya_edit').click(function() {
-            var quantity = $('#qty_edit').val()
-            $.ajax({
-                url: "<?php echo site_url('administrator/transaksi_umum/update_cart/') ?>" + produk_id,
-                method: "POST",
-                data: {
-                    row_id: id,
-                    quantity: quantity
-                },
-                dataType: "JSON",
-                success: function(ok) {
-                    if (ok.status) {
-                        $('#modal_edit').modal('hide')
-                        reload_table()
-                        reload_total()
-                        document.getElementById('form_order').reset()
-                        document.getElementById('kode_barang').focus()
-                    } else {
-                        $.notify("Gagal! \n" + ok.message, "error")
-                        $('#qty_edit').focus()
-                    }
-                }
-            })
+        $("#qty_edit").keyup(function(event) {
+            if (event.keyCode === 13) {
+                $('#iya_edit').click(function() {
+                    var quantity = $('#qty_edit').val()
+                    $.ajax({
+                        url: "<?php echo site_url('administrator/transaksi_umum/update_cart/') ?>" + produk_id,
+                        method: "POST",
+                        data: {
+                            row_id: id,
+                            quantity: quantity
+                        },
+                        dataType: "JSON",
+                        success: function(ok) {
+                            if (ok.status) {
+                                $('#modal_edit').modal('hide')
+                                reload_table()
+                                reload_total()
+                                document.getElementById('form_order').reset()
+                                document.getElementById('kode_barang').focus()
+                            } else {
+                                $.notify("Gagal! \n" + ok.message, "error")
+                                $('#qty_edit').focus()
+                            }
+                        }
+                    })
+                })
+            }
         })
+
     }
 
     function hapus_cart(id, produk_id) {
@@ -562,7 +619,7 @@
 
         //
 
-        
+
         var bayar = $('#dibayar').val()
         if (bayar == 0) {
             $.notify("Gagal! \nHarap isi terlebih dahulu kolom pada \npembayaran untuk menyimpan transaksi \ndan mencetak stock.", "error")
