@@ -614,15 +614,15 @@
     })
 
 
-    function update_cart(id, produk_id) {
+    function update_cart(id_transaksi, kode_produk) {
         $.ajax({
-            url: "<?php echo site_url('kasir/transaksi_umum/get_cart/') ?>" + id,
+            url: "<?php echo site_url('kasir/data_transaksi/get_cart/') ?>" + kode_produk + '/code',
             type: "GET",
             dataType: "JSON",
             success: function(obj) {
                 $('#modal_edit').modal('show');
                 $('#get_cart').html(
-                    '<td class="text-center">' + obj.result.produk_id + '</td>' +
+                    '<td class="text-center">' + obj.result.ID_produk + '</td>' +
                     '<td>' + obj.result.nama_produk + '</td>' +
                     '<td class="text-center">' + obj.result.qty + '</td>' +
                     '<td class="text-center">' + obj.result.satuan + '</td>' +
@@ -639,13 +639,12 @@
         })
 
         $('#iya_edit').click(function() {
-            var quantity = $('#qty_edit').val()
+            var qty = $('#qty_edit').val()
             $.ajax({
-                url: "<?php echo site_url('kasir/transaksi_umum/update_cart/') ?>" + produk_id,
+                url: "<?php echo site_url('kasir/data_transaksi/updatecart/') ?>" + kode_produk + '/' + $('#table-update-transaction').data('selling'),
                 method: "POST",
                 data: {
-                    row_id: id,
-                    quantity: quantity
+                    qty: qty
                 },
                 dataType: "JSON",
                 success: function(ok) {
@@ -707,45 +706,5 @@
 
         })
 
-    }
-
-
-    function button_selesai() {
-
-        var bayar = $('#dibayar').val()
-        if (bayar == 0) {
-            $.notify("Gagal! \nHarap isi terlebih dahulu kolom pada \npembayaran untuk menyimpan transaksi \ndan mencetak stock.", "error")
-            document.getElementById('dibayar').focus()
-        } else {
-            $.ajax({
-                url: "<?php echo site_url('kasir/transaksi_umum/tambah_transaksi') ?>",
-                type: "POST",
-                data: {
-                    bayar: bayar
-                },
-                dataType: "JSON",
-                success: function(obj) {
-                    if (obj.status == true) {
-                        $.notify("Sukses! \nPembayaran berhasil \ndan akan mencetak faktur.", "success")
-                        popup(obj.id_transaksi)
-                    } else {
-                        $.notify("Gagal! \nHarap isi terlebih dahulu kolom pada \npembayaran untuk menyimpan transaksi \ndan mencetak stock.", "error")
-                    }
-                }
-            })
-
-        }
-
-    }
-
-    function popup(id) {
-        newwindow = window.open("<?php echo site_url('kasir/transaksi_umum/print_transaction/') ?>" + id + '?print=yes', 'name', 'height=600,width=800')
-
-        if (window.focus) {
-            newwindow.focus()
-        }
-        window.location.assign("<?php echo site_url('kasir/transaksi_umum') ?>")
-
-        return false
     }
 </script>

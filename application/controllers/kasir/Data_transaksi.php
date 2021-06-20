@@ -202,7 +202,7 @@ class Data_transaksi extends CI_Controller
 		echo json_encode($output);
 	}
 
-	public function updatecart($param = 0)
+	public function updatecart($param = 0, $sell_type)
 	{
 		$product = $this->db->query("SELECT * FROM tb_produk WHERE kode_produk = '{$param}'")->row();
 
@@ -247,7 +247,7 @@ class Data_transaksi extends CI_Controller
 				),
 				array(
 					'id' => $items->id
-				)
+				),
 			);
 
 			$output = array(
