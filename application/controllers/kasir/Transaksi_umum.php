@@ -87,16 +87,22 @@ class Transaksi_umum extends CI_Controller
     public function get_data($id)
     {
 
-        $data = $this->TransaksiModel->tampil_data_by_kode_produk($id);
+        $query = $this->TransaksiModel->tampil_data_by_kode_produk($id);
 
-        $output['result'] = array(
-            'ID_produk' => $data['kode_produk'],
-            'nama_produk' => $data['nama_produk'],
-            'stok' => $data['stok'],
-            'satuan' => $data['satuan'],
-            'harga_umum' => 'Rp. ' . number_format($data['harga_umum'], 2, ',', '.'),
-            'harga_langganan' => 'Rp. ' . number_format($data['harga_langganan'], 2, ',', '.')
-        );
+        if (!$query->num_rows()) {
+            $output['status'] = false;
+        } else {
+            $data = $query->row_array();
+            $output['status'] = true;
+            $output['result'] = array(
+                'ID_produk' => $data['kode_produk'],
+                'nama_produk' => $data['nama_produk'],
+                'stok' => $data['stok'],
+                'satuan' => $data['satuan'],
+                'harga_umum' => 'Rp. ' . number_format($data['harga_umum'], 2, ',', '.'),
+                'harga_langganan' => 'Rp. ' . number_format($data['harga_langganan'], 2, ',', '.')
+            );
+        }
 
         echo json_encode($output);
     }
