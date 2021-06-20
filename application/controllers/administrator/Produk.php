@@ -23,6 +23,17 @@ class Produk extends CI_Controller
         
     }
 
+    public function cek_harga() {
+        $data['title'] = 'Cek Harga Produk - Sistem Kasir Dg. Tiro';
+        $data['produk'] = $this->TransaksiModel->tampil_data();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar');
+        $this->load->view('templates/navbar', $data);
+        $this->load->view('administrator/produk/cek_harga', $data);
+        $this->load->view('templates/footer');
+    }
+
     public function data_produk()
     {
         $list = $this->ProdukModel->get_datatables();

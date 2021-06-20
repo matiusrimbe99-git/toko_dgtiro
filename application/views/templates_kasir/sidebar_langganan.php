@@ -10,6 +10,14 @@
                     </span>
                 </a>
             </li>
+            <li>
+                <a href="<?php echo base_url('kasir/produk/cek_harga') ?>">
+                    <i class="fas fa-search nav_icon"></i>
+                    <span class="nav-text">
+                        Cek Harga Produk
+                    </span>
+                </a>
+            </li>
             <li class="has-subnav">
                 <a href="javascript:;">
                     <i class="fa fa-cubes nav_icon" aria-hidden="true"></i>
@@ -76,6 +84,6 @@
                     </span>
                 </a>
             </li>
-            
+
         </ul>
     </nav>
