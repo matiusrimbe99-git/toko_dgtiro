@@ -58,7 +58,7 @@ class TransaksiModel extends CI_Model
 
         $this->db->where('tb_detail_transaksi.id_transaksi', $param);
 
-        return $this->db->get('tb_detail_transaksi')->result();
+        return $this->db->get('tb_detail_transaksi')->result_array();
     }
 
     public function getItemByCode($param = 0)
