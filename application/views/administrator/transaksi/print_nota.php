@@ -58,7 +58,7 @@
 
         .content .separate {
             margin-top: 20px;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             border-top: 1px dashed #000;
         }
 
@@ -134,38 +134,35 @@
         </div>
         <div class="separate"></div>
         <div class="transaction">
-            <table class="transaction-table" cellspacing="0" cellpadding="0">
+            <table class="transaction-table" cellspacing="0" cellpadding="3">
                 <?php foreach ($produk as $row) : ?>
                     <tr>
-                        <td class='name'><?php echo $row->nama_produk; ?></td>
-                        <td class='qty'><?php echo $row->quantity . " ". $row->satuan; ?></td>
+                        <td colspan="4" class='name'><?php echo strtoupper($row->nama_produk); ?></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="width: 100%;" class='qty'><?php echo $row->quantity . " " . strtoupper($row->satuan); ?></td>
                         <td class='sell-price'><?php echo number_format($row->harga); ?></td>
                         <td class='final-price'><?php echo number_format($row->harga * $row->quantity); ?></td>
                     </tr>
-                    <tr class="price-tr">
-                        <td colspan="4">
-                            <div class="separate-line"></div>
-                        </td>
-                    </tr>
+
                 <?php endforeach; ?>
-                <tr>
-                    <td colspan="3" class="final-price">HARGA JUAL</td>
-                    <td class="final-price"><?php echo number_format($transaksi->total); ?></td>
-                </tr>
                 <tr class="price-tr">
-                    <td colspan="4">
+                    <td colspan="5">
                         <div class="separate-line"></div>
                     </td>
                 </tr>
                 <tr>
+                    <td></td>
                     <td colspan="3" class="final-price">TOTAL</td>
                     <td class="final-price"><?php echo number_format($transaksi->total); ?></td>
                 </tr>
                 <tr>
+                    <td></td>
                     <td colspan="3" class="final-price"> BAYAR</td>
                     <td class="final-price"><?php echo number_format($transaksi->paid); ?></td>
                 </tr>
                 <tr>
+                    <td></td>
                     <td colspan="3" class="final-price">KEMBALI</td>
                     <td class="final-price"><?php echo number_format($transaksi->paid - $transaksi->total); ?></td>
                 </tr>
