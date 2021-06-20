@@ -48,7 +48,7 @@ $endDate = new DateTime($this->input->get('to'));
                 <td><?php echo ++$this->page ?>.</td>
                 <td><?php echo $row->id_transaksi ?></td>
                 <td><?php echo $date->format('d F Y - H:i A'); ?></td>
-                <td class="text-center"><?php echo ($row->selling_type == 'default') ? 'Umum' : 'Grosir'; ?></td>
+                <td class="text-center"><?php echo ($row->selling_type == 'umum') ? 'Umum' : 'Grosir'; ?></td>
                 <td class="text-center">Rp. <?php echo number_format($row->total) ?></td>
             </tr>
         <?php endforeach; ?>

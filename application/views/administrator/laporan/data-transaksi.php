@@ -96,17 +96,25 @@
                                         <td class="text-center"><?php echo ++$this->page ?>.</td>
                                         <td class="text-center"><?php echo $row->id_transaksi ?></td>
                                         <td class="text-center"><?php echo $date->format('d F Y - H:i A'); ?></td>
-                                        <td class="text-center"><?php echo ($row->selling_type == 'default') ? 'Umum' : 'Grosir'; ?></td>
+                                        <td class="text-center"><?php echo ($row->selling_type == 'umum') ? 'Umum' : 'Grosir'; ?></td>
                                         <td class="text-center"><?php echo $row->nama ?></td>
                                         <td class="text-nowrap">Rp. <?php echo number_format($row->total) ?></td>
                                         <td class="text-center text-nowrap">
-                                            <?php if ($date->format('Y-m-d') == date('Y-m-d')) : ?>
+                                            <?php if ($date->format('Y-m-d') <= date('Y-m-d') && $row->selling_type == 'langganan') { ?>
                                                 <a href="<?php echo base_url("administrator/transaksi_umum/print_transaction/{$row->id_transaksi}") ?>" target="_blank" class="btn btn-xs btn-success btn-print"><i class="fa fa-print"></i></a>
                                                 <a href="<?php echo base_url("administrator/data_transaksi/update/{$row->id_transaksi}") ?>" class="btn btn-xs btn-primary"><i class="fa fa-wrench"></i></a>
-                                                
+
                                                 <a href="<?php echo site_url('administrator/data_transaksi/delete_transaksi/') . $row->id_transaksi ?>" onclick="return confirm('Yakin, ingin menghapus Data Transaksi?')" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
 
-                                            <?php endif; ?>
+                                            <?php } else if ($date->format('Y-m-d') == date('Y-m-d') && $row->selling_type == 'umum') { ?>
+                                                <a href="<?php echo base_url("administrator/transaksi_umum/print_transaction/{$row->id_transaksi}") ?>" target="_blank" class="btn btn-xs btn-success btn-print"><i class="fa fa-print"></i></a>
+                                                <a href="<?php echo base_url("administrator/data_transaksi/update/{$row->id_transaksi}") ?>" class="btn btn-xs btn-primary"><i class="fa fa-wrench"></i></a>
+
+                                                <a href="<?php echo site_url('administrator/data_transaksi/delete_transaksi/') . $row->id_transaksi ?>" onclick="return confirm('Yakin, ingin menghapus Data Transaksi?')" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+
+                                            <?php } ?>
+
+
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

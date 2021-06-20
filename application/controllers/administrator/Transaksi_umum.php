@@ -234,6 +234,7 @@ class Transaksi_umum extends CI_Controller
                 'date' => date('Y-m-d H:i:s'),
                 'total' => $this->cart->total(),
                 'paid' => str_replace(',', '', $this->input->post('bayar', TRUE)),
+                'selling_type' => 'umum',
                 'user_id' => $this->session->userdata('id'),
             );
 

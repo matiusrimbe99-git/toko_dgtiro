@@ -254,6 +254,7 @@ class Transaksi_langganan extends CI_Controller
                 'date' => date('Y-m-d H:i:s'),
                 'total' => $this->cart->total(),
                 'paid' => str_replace(',', '', $this->input->post('bayar', TRUE)),
+                'selling_type' => 'langganan',
                 'user_id' => $this->session->userdata('id'),
             );
 
