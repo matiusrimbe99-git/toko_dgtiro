@@ -96,7 +96,7 @@
                                         <td class="text-center"><?php echo ++$this->page ?>.</td>
                                         <td class="text-center"><?php echo $row->id_transaksi ?></td>
                                         <td class="text-center"><?php echo $date->format('d F Y - H:i A'); ?></td>
-                                        <td class="text-center"><?php echo ($row->selling_type == 'default') ? 'Umum' : 'Grosir'; ?></td>
+                                        <td class="text-center"><?php echo ($row->selling_type == 'umum') ? 'Umum' : 'Grosir'; ?></td>
                                         <td class="text-center"><?php echo $row->nama ?></td>
                                         <td class="text-nowrap">Rp. <?php echo number_format($row->total) ?></td>
                                         <td class="text-center text-nowrap">

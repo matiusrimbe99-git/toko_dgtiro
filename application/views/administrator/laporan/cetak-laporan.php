@@ -64,7 +64,7 @@ $endDate = new DateTime($this->input->get('to'));
 <div class="pagebreak"></div>
 
 <p style="text-align: right"><span><?php echo date('d F Y') ?></span></p>
-<p class="text-center"><strong class="head">LAPORAN KAS KEUANGAN</strong></p>
+<!-- <p class="text-center"><strong class="head">LAPORAN KAS KEUANGAN</strong></p>
 
 <table align="left" style="margin-bottom: 20px; width: 100%">
     <tr>
@@ -153,7 +153,7 @@ $endDate = new DateTime($this->input->get('to'));
             <td colspan="3" class="text-success text-center"><strong>Rp. <?php echo number_format($saldo) ?></strong></td>
         </tr>
     </tfoot>
-</table>
+</table> -->
 <?php
 $this->load->view('print/footer', $this->data, FALSE);
 
