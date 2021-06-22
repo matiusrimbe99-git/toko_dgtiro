@@ -140,7 +140,8 @@
                         <td colspan="4" class='name'><?php echo strtoupper($row->nama_produk); ?></td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="width: 100%;" class='qty'><?php echo $row->quantity . " " . strtoupper($row->satuan); ?></td>
+                        <td colspan="2" style="width: 100%;" class='qty'><?php echo $row->quantity . " " . strtoupper($row->satuan); ?></td>
+                        <td>x</td>
                         <td class='sell-price'><?php echo number_format($row->harga); ?></td>
                         <td class='final-price'><?php echo number_format($row->harga * $row->quantity); ?></td>
                     </tr>
@@ -169,7 +170,8 @@
             </table>
         </div>
         <div class="thanks" style="padding-bottom: 30px;">
-            ~~~ Terima Kasih ~~~
+            Barang yang sudah dibeli, tidak dapat dikembalikan
+            <p>~~~ Terima Kasih ~~~</p>
         </div>
     </div>
 </body>
